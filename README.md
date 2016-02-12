@@ -1,4 +1,4 @@
-##	Golang Websocket Client
+##	Golang Publish/Subscribe Websocket Client
 
 [Go](https://golang.org/) websocket client with [Gorilla](http://www.gorillatoolkit.org/) toolkit.
 
