@@ -5,24 +5,20 @@ import (
 	"log"
 	"time"
 
+	"../service"
+
 	"github.com/gorilla/websocket"
 )
-
-type WSMessage struct {
-	Action string `json:"action"`
-	Topic  string `json:"topic"`
-	Data   string `json:"data"`
-}
 
 type Hub struct {
 	ws        *websocket.Conn
 	send      chan []byte
 	broadcast chan []byte
-	topics    map[string]func(...string) []byte
+	topics    service.TopicPool
 }
 
 // Constructor.
-func NewHub(ws *websocket.Conn, t map[string]func(...string) []byte) *Hub {
+func NewHub(ws *websocket.Conn, t service.TopicPool) *Hub {
 	return &Hub{
 		ws:        ws,
 		send:      make(chan []byte, 256),

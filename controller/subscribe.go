@@ -1,26 +1,26 @@
-package service
+package controller
 
 import (
 	"encoding/json"
 	"log"
 	"time"
 
-	ctrl "../controller"
+	"../service"
 )
 
 type subscribe struct {
-	hub *ctrl.Hub
+	hub *Hub
 }
 
 // Constructor.
-func NewSubscribe(h *ctrl.Hub) *subscribe {
+func NewSubscribe(h *Hub) *subscribe {
 	return &subscribe{h}
 }
 
 // Subscribe to topic.
-func (this *subscribe) Subscribe(topics map[string]func(...string)[]byte) {
+func (this *subscribe) Subscribe(topics service.TopicPool) {
 	for topic, _ := range topics {
-		sub := &ctrl.WSMessage{"SUBSCRIBE", topic, ""}
+		sub := &WSMessage{"SUBSCRIBE", topic, ""}
 		j, err := json.Marshal(sub)
 		if err != nil {
 			log.Println(err)

@@ -1,6 +1,7 @@
 package raspberry
 
 // Get or Set LED0.
-func Led0(s ...string) []byte {
-	return []byte("{\"action\" : \"PUBLISH\", \"topic\" : \"RPI1_LED0\", \"data\" : \"OFF\"}")
+func Led0(data string) []byte {
+	pub := getMessage("RPI1_LED0", "OFF")
+	return pub
 }

@@ -1,11 +1,13 @@
 package raspberry
 
 // Get cpu temp.
-func CpuTemp(s ...string) []byte {
-	return []byte("{\"action\" : \"PUBLISH\", \"topic\" : \"RPI1_CPU_TEMP\", \"data\" : \"38.2\"}")
+func CpuTemp(data string) []byte {
+	pub := getMessage("RPI1_CPU_TEMP", "38.2")
+	return pub
 }
 
 // Get cpu memory.
-func CpuMemory(s ...string) []byte {
-	return []byte("{\"action\" : \"PUBLISH\", \"topic\" : \"RPI1_CPU_MEM\", \"data\" : \"960\"}")
+func CpuMemory(data string) []byte {
+	pub := getMessage("RPI1_CPU_MEM", "960")
+	return pub
 }

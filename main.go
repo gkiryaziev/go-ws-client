@@ -6,31 +6,13 @@ import (
 	"os"
 	"os/signal"
 	"time"
-	"errors"
 
 	ctrl "./controller"
-	srvc "./service"
 	rpi "./raspberry"
+	"./service"
 
 	"github.com/gorilla/websocket"
 )
-
-// Check key value
-func checkArgs(args_length, arg_index int) error {
-	if args_length == (arg_index + 1) {
-		return errors.New("Not specified key value.")
-	}
-	return nil
-}
-
-func checkError(err error) {
-	if err != nil {
-		srvc.Usage()
-		fmt.Println()
-		fmt.Println("Error:", err)
-		os.Exit(-1)
-	}
-}
 
 func main() {
 	// variables
@@ -41,15 +23,15 @@ func main() {
 	for k, arg := range os.Args {
 		switch arg {
 		case "-h":
-			srvc.Usage()
+			service.Usage()
 			return
 		case "-v":
 			fmt.Println(version)
 			return
 		case "-a":
-			err := checkArgs(len(os.Args), k)
-			checkError(err)
-			address = os.Args[k + 1]
+			err := service.CheckArgs(len(os.Args), k)
+			service.CheckError(err)
+			address = os.Args[k+1]
 		}
 	}
 
@@ -58,14 +40,14 @@ func main() {
 
 	// open connection
 	ws, _, err := websocket.DefaultDialer.Dial(address, nil)
-	checkError(err)
+	service.CheckError(err)
 	defer ws.Close()
 
 	// topics pool
-	topics := map[string]func(...string)[]byte{
-		"RPI1_LED0": rpi.Led0,
+	topics := service.TopicPool{
+		"RPI1_LED0":     rpi.Led0,
 		"RPI1_CPU_TEMP": rpi.CpuTemp,
-		"RPI1_CPU_MEM": rpi.CpuMemory,
+		"RPI1_CPU_MEM":  rpi.CpuMemory,
 	}
 
 	log.Println("Connected to", address)
@@ -80,7 +62,7 @@ func main() {
 	time.Sleep(time.Second)
 
 	// subscribe
-	srvc.NewSubscribe(hub).Subscribe(topics)
+	ctrl.NewSubscribe(hub).Subscribe(topics)
 
 	//ticker := time.NewTicker(time.Second * 3)
 	//defer ticker.Stop()
