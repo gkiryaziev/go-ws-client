@@ -2,7 +2,7 @@ package raspberry
 
 // Get cpu temp.
 func (this *raspberry) CpuTemp(data string) []byte {
-	temp := this.command.Command("go").Arg("run").Arg("temp.go").Clean("temp=").Clean("'C").Run()
+	temp := this.command.Command("vcgencmd").Arg("measure_temp").Clean("temp=").Clean("'C").Run()
 	if temp == "" {
 		return nil
 	}
@@ -11,7 +11,7 @@ func (this *raspberry) CpuTemp(data string) []byte {
 
 // Get cpu memory.
 func (this *raspberry) CpuMemory(data string) []byte {
-	mem := this.command.Command("go").Arg("run").Arg("mem.go").Clean("arm=").Clean("M").Run()
+	mem := this.command.Command("vcgencmd").Arg("get_mem").Arg("arm").Clean("arm=").Clean("M").Run()
 	if mem == "" {
 		return nil
 	}
