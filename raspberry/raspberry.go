@@ -5,7 +5,16 @@ import (
 	"log"
 
 	ctrl "../controller"
+	cmd "../command"
 )
+
+type raspberry struct {
+	command *cmd.Command
+}
+
+func NewRaspberry() *raspberry {
+	return &raspberry{cmd.NewCommand()}
+}
 
 // Get json message
 func getMessage(topic, data string) []byte {

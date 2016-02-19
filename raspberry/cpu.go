@@ -1,13 +1,19 @@
 package raspberry
 
 // Get cpu temp.
-func CpuTemp(data string) []byte {
-	pub := getMessage("RPI1_CPU_TEMP", "38.2")
-	return pub
+func (this *raspberry) CpuTemp(data string) []byte {
+	temp := this.command.Command("go").Arg("run").Arg("temp.go").Clean("temp=").Clean("'C").Run()
+	if temp == "" {
+		return nil
+	}
+	return getMessage("RPI1_CPU_TEMP", temp)
 }
 
 // Get cpu memory.
-func CpuMemory(data string) []byte {
-	pub := getMessage("RPI1_CPU_MEM", "960")
-	return pub
+func (this *raspberry) CpuMemory(data string) []byte {
+	mem := this.command.Command("go").Arg("run").Arg("mem.go").Clean("arm=").Clean("M").Run()
+	if mem == "" {
+		return nil
+	}
+	return getMessage("RPI1_CPU_MEM", mem)
 }

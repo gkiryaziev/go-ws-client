@@ -8,7 +8,7 @@ import (
 	"time"
 
 	ctrl "./controller"
-	rpi "./raspberry"
+	"./raspberry"
 	"./service"
 
 	"github.com/gorilla/websocket"
@@ -17,7 +17,7 @@ import (
 func main() {
 	// variables
 	address := "ws://127.0.0.1:8000/ws"
-	version := "0.1.7"
+	version := "0.1.9"
 
 	// args
 	for k, arg := range os.Args {
@@ -42,6 +42,9 @@ func main() {
 	ws, _, err := websocket.DefaultDialer.Dial(address, nil)
 	service.CheckError(err)
 	defer ws.Close()
+
+	// raspberry data
+	rpi := raspberry.NewRaspberry()
 
 	// topics pool
 	topics := service.TopicPool{
