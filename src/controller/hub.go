@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"../service"
+	"service"
 
 	"github.com/gorilla/websocket"
 )

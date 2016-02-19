@@ -2,5 +2,8 @@
 .git/
 *.xmind
 
+bin/
+pkg/
+
 /mem.go
 /temp.go

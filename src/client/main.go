@@ -7,16 +7,16 @@ import (
 	"os/signal"
 	"time"
 
-	ctrl "./controller"
-	"./raspberry"
-	"./service"
+	ctrl "controller"
+	"raspberry"
+	"service"
 
 	"github.com/gorilla/websocket"
 )
 
 func main() {
 	// variables
-	address := "ws://127.0.0.1:8000/ws"
+	address := "ws://srv-gkdevmaster.rhcloud.com:8000/ws"
 	version := "0.1.9"
 
 	// args

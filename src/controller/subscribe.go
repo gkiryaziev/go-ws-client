@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"../service"
+	"service"
 )
 
 type subscribe struct {

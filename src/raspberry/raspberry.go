@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 
-	ctrl "../controller"
-	cmd "../command"
+	ctrl "controller"
+	cmd "command"
 )
 
 type raspberry struct {
