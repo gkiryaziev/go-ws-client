@@ -2,5 +2,5 @@
 .git/
 *.xmind
 
-mem.go
-temp.go
+/mem.go
+/temp.go
