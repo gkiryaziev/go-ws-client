@@ -1,7 +1,6 @@
 package raspberry
 
-type raspberry struct {
-}
+type raspberry struct {}
 
 func NewRaspberry() *raspberry {
 	return &raspberry{}

@@ -1,7 +1,7 @@
 package raspberry
 
 import (
-	ctrl "controller"
+	ctrl "rpi.ws.client/controller"
 )
 
 // Get or Set LED0.

@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"service"
+	"rpi.ws.client/service"
 )
 
 type subscribe struct {

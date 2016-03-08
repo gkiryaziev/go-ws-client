@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"log"
 
-	cmd "command"
-	"command/memory"
-	ctrl "controller"
+	cmd "rpi.ws.client/command"
+	"rpi.ws.client/command/memory"
+	ctrl "rpi.ws.client/controller"
 )
 
 // Get system memory.

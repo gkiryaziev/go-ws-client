@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	ctrl "controller"
-	"raspberry"
-	"service"
+	ctrl "rpi.ws.client/controller"
+	"rpi.ws.client/raspberry"
+	"rpi.ws.client/service"
 
 	"github.com/gorilla/websocket"
 )
@@ -85,7 +85,7 @@ func main() {
 			hub.Send(ctrl.GetMessage("RPI1_PING", ""))
 
 		case <-interrupt:
-			fmt.Println("Stoping...")
+			fmt.Println("Terminating...")
 			os.Exit(0)
 		}
 	}

@@ -1,9 +1,9 @@
 package raspberry
 
 import (
-	ctrl "controller"
-	cmd  "command"
-	"command/cpu"
+	ctrl "rpi.ws.client/controller"
+	cmd  "rpi.ws.client/command"
+	"rpi.ws.client/command/cpu"
 )
 
 // Get cpu temp.
