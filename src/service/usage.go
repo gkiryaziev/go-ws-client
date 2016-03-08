@@ -18,6 +18,7 @@ func Usage() {
 	fmt.Println()
 	fmt.Println("Options:")
 	fmt.Println("    -a    STR        Server address. [ws://127.0.0.1:8000/ws]")
+	fmt.Println("    -p    INT        Ping timeout.   [10 min]")
 	fmt.Println()
 	fmt.Println("    -h               This help.")
 	fmt.Println("    -v               Print version.")

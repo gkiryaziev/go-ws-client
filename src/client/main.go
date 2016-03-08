@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"time"
 
 	ctrl "controller"
@@ -17,7 +18,8 @@ import (
 func main() {
 	// variables
 	address := "ws://srv-gkdevmaster.rhcloud.com:8000/ws"
-	version := "0.1.9"
+	pingTimeout := 10
+	version := "0.1.9.2"
 
 	// args
 	for k, arg := range os.Args {
@@ -32,6 +34,11 @@ func main() {
 			err := service.CheckArgs(len(os.Args), k)
 			service.CheckError(err)
 			address = os.Args[k+1]
+		case "-p":
+			err := service.CheckArgs(len(os.Args), k)
+			service.CheckError(err)
+			pingTimeout, err = strconv.Atoi(os.Args[k+1])
+			service.CheckError(err)
 		}
 	}
 
@@ -51,6 +58,7 @@ func main() {
 		"RPI1_LED0":     rpi.Led0,
 		"RPI1_CPU_TEMP": rpi.CpuTemp,
 		"RPI1_CPU_MEM":  rpi.CpuMemory,
+		"RPI1_SYS_MEM":  rpi.SystemMemory,
 	}
 
 	log.Println("Connected to", address)
@@ -67,20 +75,14 @@ func main() {
 	// subscribe
 	ctrl.NewSubscribe(hub).Subscribe(topics)
 
-	//ticker := time.NewTicker(time.Second * 3)
-	//defer ticker.Stop()
-
-	// publish
-	//list := []func() []byte{rpi.CpuTemp, rpi.CpuMemory}
+	ticker := time.NewTicker(time.Duration(pingTimeout) * time.Minute)
+	defer ticker.Stop()
 
 	// wait for terminating
 	for {
 		select {
-		//case <-ticker.C:
-		//	for _, f := range list {
-		//		hub.Send(f())
-		//		//time.Sleep(time.Millisecond * 500)
-		//	}
+		case <-ticker.C:
+			hub.Send(ctrl.GetMessage("RPI1_PING", ""))
 
 		case <-interrupt:
 			fmt.Println("Stoping...")
