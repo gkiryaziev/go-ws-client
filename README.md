@@ -21,7 +21,7 @@ Message example:
 #### 2. Install GB
   `go get -u github.com/constabulary/gb/...`
 #### 3. Clone project
-  `git clone https://gkiryaziev@bitbucket.org/gkiryaziev/go_gorilla_pubsub_websocket_client.git`
+  `git clone https://github.com/gkiryaziev/go_gorilla_pubsub_websocket_client.git`
 #### 4. Restore vendors
   `cd go_gorilla_pubsub_websocket_client`
   
