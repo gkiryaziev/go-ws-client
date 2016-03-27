@@ -14,3 +14,19 @@ Message example:
 ```
 
 ![Mind](/mind.png?raw=true "Mind")
+
+## Installation
+
+#### 1. Install GO
+#### 2. Install GB
+  `go get -u github.com/constabulary/gb/...`
+#### 3. Clone project
+  `git clone https://gkiryaziev@bitbucket.org/gkiryaziev/go_gorilla_pubsub_websocket_client.git`
+#### 4. Restore vendors
+  `cd go_gorilla_pubsub_websocket_client`
+  
+  `gb vendor restore`
+#### 5. Edit configuration
+  Copy `config.default.yaml` to `config.yaml` and edit configuration.
+#### 6. Build and Run project
+  `gb build && bin/rpi.ws.client run`

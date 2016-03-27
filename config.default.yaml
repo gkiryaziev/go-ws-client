@@ -1,0 +1,5 @@
+debug: false
+
+server:
+  address:      "ws://localhost:8000/ws"
+  ping_timeout: 10

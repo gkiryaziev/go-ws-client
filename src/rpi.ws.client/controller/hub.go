@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"rpi.ws.client/conf"
 	"rpi.ws.client/service"
 
 	"github.com/gorilla/websocket"
@@ -15,21 +16,32 @@ type Hub struct {
 	send      chan []byte
 	broadcast chan []byte
 	topics    service.TopicPool
+	debug     bool
 }
 
 // Constructor.
 func NewHub(ws *websocket.Conn, t service.TopicPool) *Hub {
+
+	// config
+	config := conf.GetConfig()
+
 	return &Hub{
 		ws:        ws,
 		send:      make(chan []byte, 256),
 		broadcast: make(chan []byte),
 		topics:    t,
+		debug:     config.Debug,
 	}
 }
 
 // Send data.
 func (this *Hub) Send(data []byte) {
-	log.Println("Sent:", string(data))
+
+	// debug message
+	if this.debug {
+		log.Println("Sent:", string(data))
+	}
+
 	this.send <- data
 }
 
@@ -72,7 +84,10 @@ func (this *Hub) Run() {
 		select {
 		case b := <-this.broadcast:
 
-			log.Println("Received:", string(b))
+			// debug message
+			if this.debug {
+				log.Println("Received:", string(b))
+			}
 
 			// unmarshal message
 			var msg WSMessage
