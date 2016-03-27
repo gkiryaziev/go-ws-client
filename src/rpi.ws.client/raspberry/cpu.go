@@ -1,9 +1,9 @@
 package raspberry
 
 import (
-	ctrl "rpi.ws.client/controller"
-	cmd  "rpi.ws.client/command"
+	cmd "rpi.ws.client/command"
 	"rpi.ws.client/command/cpu"
+	ctrl "rpi.ws.client/controller"
 )
 
 // Get cpu temp.
@@ -23,4 +23,14 @@ func (this *raspberry) CpuMemory(data string) []byte {
 		return nil
 	}
 	return ctrl.GetMessage("RPI1_CPU_MEM", cpuMem)
+}
+
+// Get core volt.
+func (this *raspberry) CpuCoreVolt(data string) []byte {
+
+	cpuCoreVolt := cpu.Clean(cmd.Exec("vcgencmd", "measure_volts", "core"), "volt=", "V")
+	if cpuCoreVolt == "" {
+		return nil
+	}
+	return ctrl.GetMessage("RPI1_CPU_CORE_VOLT", cpuCoreVolt)
 }
