@@ -5,10 +5,9 @@ import (
 	"log"
 	"time"
 
-	"rpi.ws.client/conf"
-	"rpi.ws.client/service"
-
 	"github.com/gorilla/websocket"
+
+	"github.com/gkiryaziev/go-ws-client/service"
 )
 
 type Hub struct {
@@ -19,55 +18,52 @@ type Hub struct {
 	debug     bool
 }
 
-// Constructor.
-func NewHub(ws *websocket.Conn, t service.TopicPool) *Hub {
-
-	// config
-	config := conf.GetConfig()
+// NewHub return new Hub object.
+func NewHub(ws *websocket.Conn, t service.TopicPool, debug bool) *Hub {
 
 	return &Hub{
 		ws:        ws,
 		send:      make(chan []byte, 256),
 		broadcast: make(chan []byte),
 		topics:    t,
-		debug:     config.Debug,
+		debug:     debug,
 	}
 }
 
 // Send data.
-func (this *Hub) Send(data []byte) {
+func (h *Hub) Send(data []byte) {
 
 	// debug message
-	if this.debug {
+	if h.debug {
 		log.Println("Sent:", string(data))
 	}
 
-	this.send <- data
+	h.send <- data
 }
 
-// Connection reader.
-func (this *Hub) Reader() {
-	defer this.ws.Close()
+// Reader is data reader.
+func (h *Hub) Reader() {
+	defer h.ws.Close()
 	log.Println("Reader started.")
 	for {
-		_, message, err := this.ws.ReadMessage()
+		_, message, err := h.ws.ReadMessage()
 		if err != nil {
 			log.Println(err)
 			break
 		}
-		this.broadcast <- message
+		h.broadcast <- message
 	}
 }
 
-// Connection writer.
-func (this *Hub) Writer() {
-	defer this.ws.Close()
+// Writer is data writer.
+func (h *Hub) Writer() {
+	defer h.ws.Close()
 	log.Println("Writer started.")
 	for {
 		select {
-		case message, ok := <-this.send:
+		case message, ok := <-h.send:
 			if ok {
-				err := this.ws.WriteMessage(websocket.TextMessage, message)
+				err := h.ws.WriteMessage(websocket.TextMessage, message)
 				if err != nil {
 					log.Println(err)
 					break
@@ -77,15 +73,15 @@ func (this *Hub) Writer() {
 	}
 }
 
-// Main method.
-func (this *Hub) Run() {
+// Run is main method.
+func (h *Hub) Run() {
 	log.Println("Hub started.")
 	for {
 		select {
-		case b := <-this.broadcast:
+		case b := <-h.broadcast:
 
 			// debug message
-			if this.debug {
+			if h.debug {
 				log.Println("Received:", string(b))
 			}
 
@@ -101,9 +97,9 @@ func (this *Hub) Run() {
 			switch msg.Action {
 			case "PUBLISH":
 				// get func by topic name
-				if fn, ok := this.topics[msg.Topic]; ok {
+				if fn, ok := h.topics[msg.Topic]; ok {
 					if m := fn(msg.Data); m != nil {
-						this.Send(m)
+						h.Send(m)
 						time.Sleep(time.Millisecond * 500)
 					}
 				}

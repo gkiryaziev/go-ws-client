@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"log"
 
-	cmd "rpi.ws.client/command"
-	"rpi.ws.client/command/memory"
-	ctrl "rpi.ws.client/controller"
+	cmd "github.com/gkiryaziev/go-ws-client/command"
+	"github.com/gkiryaziev/go-ws-client/command/memory"
+	ctrl "github.com/gkiryaziev/go-ws-client/controller"
 )
 
-// Get system memory.
-func (this *raspberry) SystemMemory(data string) []byte {
+// SystemMemory return system memory.
+func (r *raspberry) SystemMemory(data string) []byte {
 
 	sysMem := memory.Clean(cmd.Exec("cat", "/proc/meminfo"), "MemTotal:", "MemFree:", "MemAvailable:")
 	if sysMem == nil {

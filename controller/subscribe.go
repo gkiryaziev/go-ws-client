@@ -5,20 +5,20 @@ import (
 	"log"
 	"time"
 
-	"rpi.ws.client/service"
+	"github.com/gkiryaziev/go-ws-client/service"
 )
 
 type subscribe struct {
 	hub *Hub
 }
 
-// Constructor.
+// NewSubscribe return new subscribe object.
 func NewSubscribe(h *Hub) *subscribe {
 	return &subscribe{h}
 }
 
 // Subscribe to topic.
-func (this *subscribe) Subscribe(topics service.TopicPool) {
+func (s *subscribe) Subscribe(topics service.TopicPool) {
 	for topic, _ := range topics {
 		sub := &WSMessage{"SUBSCRIBE", topic, ""}
 		j, err := json.Marshal(sub)
@@ -26,7 +26,7 @@ func (this *subscribe) Subscribe(topics service.TopicPool) {
 			log.Println(err)
 			break
 		}
-		this.hub.Send([]byte(j))
+		s.hub.Send([]byte(j))
 		time.Sleep(time.Millisecond * 500)
 	}
 }

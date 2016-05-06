@@ -8,15 +8,16 @@ import (
 	"syscall"
 	"time"
 
-	"rpi.ws.client/conf"
-	ctrl "rpi.ws.client/controller"
-	"rpi.ws.client/raspberry"
-	"rpi.ws.client/service"
-
 	"github.com/gorilla/websocket"
+
+	"github.com/gkiryaziev/go-ws-client/conf"
+	ctrl "github.com/gkiryaziev/go-ws-client/controller"
+	"github.com/gkiryaziev/go-ws-client/raspberry"
+	"github.com/gkiryaziev/go-ws-client/service"
 )
 
-func CheckError(err error) {
+// checkError check errors
+func checkError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -24,7 +25,8 @@ func CheckError(err error) {
 
 func main() {
 	// config
-	config := conf.GetConfig()
+	config, err := conf.NewConfig("config.yaml").Load()
+	checkError(err)
 
 	// interrupt
 	interrupt := make(chan os.Signal)
@@ -32,7 +34,7 @@ func main() {
 
 	// open connection
 	ws, _, err := websocket.DefaultDialer.Dial(config.Server.Address, nil)
-	CheckError(err)
+	checkError(err)
 	defer ws.Close()
 
 	// raspberry data
@@ -51,7 +53,7 @@ func main() {
 	time.Sleep(time.Second)
 
 	// main circle
-	hub := ctrl.NewHub(ws, topics)
+	hub := ctrl.NewHub(ws, topics, config.Debug)
 	go hub.Run()
 	time.Sleep(time.Second)
 	go hub.Writer()

@@ -2,7 +2,7 @@ package memory
 
 import "strings"
 
-// MemTotal: MemFree: MemAvailable:
+// Clean return MemTotal, MemFree, MemAvailable.
 func Clean(str string, args ...string) map[string]string {
 	if str == "" {
 		return nil

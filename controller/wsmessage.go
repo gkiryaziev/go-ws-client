@@ -11,7 +11,7 @@ type WSMessage struct {
 	Data   string `json:"data"`
 }
 
-// Get json message
+// GetMessage return message as json
 func GetMessage(topic, data string) []byte {
 	pub := &WSMessage{"PUBLISH", topic, data}
 	j, err := json.Marshal(pub)
