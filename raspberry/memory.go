@@ -10,7 +10,7 @@ import (
 )
 
 // SystemMemory return system memory.
-func (r *raspberry) SystemMemory(data string) []byte {
+func (r *Raspberry) SystemMemory(data string) []byte {
 
 	sysMem := memory.Clean(cmd.Exec("cat", "/proc/meminfo"), "MemTotal:", "MemFree:", "MemAvailable:")
 	if sysMem == nil {

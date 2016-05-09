@@ -1,7 +1,9 @@
 package raspberry
 
-type raspberry struct{}
+// Raspberry struct
+type Raspberry struct{}
 
-func NewRaspberry() *raspberry {
-	return &raspberry{}
+// NewRaspberry return new Raspberry object
+func NewRaspberry() *Raspberry {
+	return &Raspberry{}
 }

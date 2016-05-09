@@ -2,7 +2,7 @@
 .git/
 
 *.xmind
-
+*.exe
 config.yaml
 
 mem.go

@@ -43,9 +43,9 @@ func main() {
 	// topics pool
 	topics := service.TopicPool{
 		"RPI1_LED0":          rpi.Led0,
-		"RPI1_CPU_TEMP":      rpi.CpuTemp,
-		"RPI1_CPU_MEM":       rpi.CpuMemory,
-		"RPI1_CPU_CORE_VOLT": rpi.CpuCoreVolt,
+		"RPI1_CPU_TEMP":      rpi.CPUTemp,
+		"RPI1_CPU_MEM":       rpi.CPUMemory,
+		"RPI1_CPU_CORE_VOLT": rpi.CPUCoreVolt,
 		"RPI1_SYS_MEM":       rpi.SystemMemory,
 	}
 

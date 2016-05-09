@@ -8,18 +8,19 @@ import (
 	"github.com/gkiryaziev/go-ws-client/service"
 )
 
-type subscribe struct {
+// Subscribe struct
+type Subscribe struct {
 	hub *Hub
 }
 
-// NewSubscribe return new subscribe object.
-func NewSubscribe(h *Hub) *subscribe {
-	return &subscribe{h}
+// NewSubscribe return new Subscribe object.
+func NewSubscribe(h *Hub) *Subscribe {
+	return &Subscribe{h}
 }
 
 // Subscribe to topic.
-func (s *subscribe) Subscribe(topics service.TopicPool) {
-	for topic, _ := range topics {
+func (s *Subscribe) Subscribe(topics service.TopicPool) {
+	for topic := range topics {
 		sub := &WSMessage{"SUBSCRIBE", topic, ""}
 		j, err := json.Marshal(sub)
 		if err != nil {

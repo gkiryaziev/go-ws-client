@@ -10,6 +10,7 @@ import (
 	"github.com/gkiryaziev/go-ws-client/service"
 )
 
+// Hub struct
 type Hub struct {
 	ws        *websocket.Conn
 	send      chan []byte

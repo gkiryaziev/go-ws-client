@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// WSMessage struct
 type WSMessage struct {
 	Action string `json:"action"`
 	Topic  string `json:"topic"`

@@ -5,7 +5,7 @@ import (
 )
 
 // Led0 get or set LED0.
-func (r *raspberry) Led0(data string) []byte {
+func (r *Raspberry) Led0(data string) []byte {
 	pub := ctrl.GetMessage("RPI1_LED0", "OFF")
 	return pub
 }
