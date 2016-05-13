@@ -31,3 +31,11 @@ Copy `config.default.yaml` to `config.yaml` and edit configuration.
 ```
 go build && go-ws-client
 ```
+
+### Packages:
+You can use [glide](https://glide.sh/) packages manager to get all needed packages.
+```
+go get -u -v github.com/Masterminds/glide
+
+cd go-ws-client && glide install
+```
