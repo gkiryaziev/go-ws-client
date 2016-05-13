@@ -1,0 +1,4 @@
+package: github.com/gkiryaziev/go-ws-client
+import:
+- package: github.com/gorilla/websocket
+- package: gopkg.in/yaml.v2
